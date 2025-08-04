@@ -42,6 +42,7 @@ DJANGO_APPS = [
 
 CUSTOM_APPS = [
     'user',
+    'apiApp',
 ]
 
 THIRDPARTY_APPS = [
