@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import os
 
-endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+endpoint_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 User = get_user_model()
