@@ -17,6 +17,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(_("Date_joined"), auto_now_add=True)
     last_login = models.DateTimeField(_("Last Login Date"), auto_now=True)
+    profile_picture_url = models.URLField(blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "phone_number"]
