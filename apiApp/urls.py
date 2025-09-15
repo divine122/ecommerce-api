@@ -17,7 +17,7 @@ urlpatterns = [
     path('search/', views.product_search, name='search'),
     path('create_checkout_session/', views.create_checkout_session, name='create_checkout_session'),
     path('webhook/', views.my_webhook_view, name='webhook'),
-    path('payment_success/', views.payment_success, name='payment_success'),
-    path('payment_cancel/',views.payment_cancel, name='payment_cancel')
+    path('success/', views.payment_success, name='payment_success'),
+    path('cancel/',views.payment_cancel, name='payment_cancel')
 ]
 
