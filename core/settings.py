@@ -29,7 +29,10 @@ SECRET_KEY = 'django-insecure-$r5a%i#=q7wi+w92=g2+ie875m&=gc%kwq8$7rog)skqxpp^4s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =["ecommerce-api-1-gy8w.onrender.com", "127.0.0.1", "localhost"]
+# ALLOWED_HOSTS =["19cd314d2c05.ngrok-free.app", "127.0.0.1", "localhost"]
+# CSRF_TRUSTED_ORIGINS =["https://19cd314d2c05.ngrok-free.app"]
+
+ALLOWED_HOST = ["*"]
 
 
 
@@ -59,6 +62,7 @@ INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRDPARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -92,12 +96,30 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DB = os.getenv("DB")
+
+if not DB:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+
+else:    
+
+    DATABASES = {
+        'default' : {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME' : 'railway',
+            'USER' : 'postgres',
+            'PASSWORD' : os.getenv("PG_PASSWORD"),
+            'HOST' : os.getenv("PG_HOST"),
+            'PORT' : os.getenv("PG_PORT")
+
+        }
+    }
+
 
 
 # Password validation
@@ -135,6 +157,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -168,3 +191,4 @@ DJOSER = {
 
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
